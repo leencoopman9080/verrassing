@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f8eee3">
+<title>Zie je het licht? — een kleine zoektocht naar de liefde</title>
+<style>
+:root{--paper:#f8eee3;--ink:#653f36;--muted:#97766a;--rose:#d96070;--rose-dark:#b94d60;--cream:#fff9f1}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(140deg,#f5e2d0,#f9f1e8 55%,#edd7c5);font-family:Georgia,'Times New Roman',serif;color:var(--ink);min-height:100vh;display:flex;justify-content:center;padding:22px 12px}
+.app{width:min(100%,430px);background:var(--paper);border-radius:28px;box-shadow:0 18px 55px #754b3525;overflow:hidden;border:1px solid #fff9f0}
+header{padding:23px 22px 15px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+h1{font-size:25px;line-height:1.05;margin:0;letter-spacing:-.6px}.subtitle{font:12px Arial,sans-serif;color:var(--muted);margin-top:7px}
+.counter{font:13px Arial,sans-serif;background:#eddbcd;padding:10px 12px;border-radius:20px;white-space:nowrap}
+main{padding:0 15px 18px}.panel{border-radius:22px;overflow:hidden}
+.intro,.ending{padding:28px 23px;text-align:center;background:linear-gradient(150deg,#f0d8c1,#fff0df)}
+.sun{font-size:76px;line-height:1.25;margin:8px 0 18px}
+h2{font-size:27px;line-height:1.13;margin:8px 0 14px}
+p{line-height:1.65;font-size:15px;margin:10px 0}
+.small{font:12px/1.5 Arial,sans-serif;color:var(--muted)}
+button{border:0;border-radius:30px;padding:14px 20px;background:var(--rose);color:white;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 5px 12px #b94d6028;transition:transform .15s,background .15s}
+button:hover{background:var(--rose-dark);transform:translateY(-1px)}button:focus-visible{outline:3px solid #74463c;outline-offset:3px}
+.primary{width:100%;margin-top:17px}.game-head{display:flex;justify-content:space-between;align-items:center;font:12px Arial,sans-serif;color:var(--muted);padding:0 3px 10px}
+.stage{height:min(66vh,510px);min-height:390px;position:relative;perspective:900px}
+.card{position:absolute;inset:0;border-radius:20px;overflow:hidden;background:#d9b89d;box-shadow:0 9px 25px #5b392522;user-select:none;touch-action:pan-y;cursor:grab;transform:translate(0,0) rotate(0);will-change:transform}
+.art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden}
+.art:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 27%,#fff7dc66,transparent 45%),linear-gradient(140deg,transparent,#5a36221a)}
+.sunshine{position:absolute;width:210px;height:210px;border-radius:50%;background:#fff0c444;top:8%;right:-12%}
+.person{position:relative;display:flex;flex-direction:column;align-items:center;transform:translateY(-2px)}
+.head{width:102px;height:115px;border-radius:46% 46% 43% 43%;background:#d9a47f;position:relative;z-index:2;box-shadow:inset -12px -7px #a9664b22}
+.hair{position:absolute;top:-9px;left:-5px;width:112px;height:51px;border-radius:55% 52% 26% 25%;background:var(--hair);z-index:3;transform:rotate(-4deg)}
+.ear{position:absolute;width:17px;height:28px;background:#d9a47f;top:42px;border-radius:50%}.ear.left{left:-10px}.ear.right{right:-10px}
+.eyes{position:absolute;top:49px;left:25px;width:53px;display:flex;justify-content:space-between;z-index:4}.eyes i{width:6px;height:7px;border-radius:50%;background:#493128}
+.nose{position:absolute;top:58px;left:48px;width:9px;height:15px;border-right:2px solid #a96d54;border-bottom:2px solid #a96d54;transform:rotate(12deg);z-index:4}
+.smile{position:absolute;top:77px;left:37px;width:31px;height:13px;border-bottom:3px solid #8b4d42;border-radius:0 0 50% 50%;z-index:4}
+.neck{width:37px;height:34px;background:#c88e69;margin-top:-5px;z-index:1}
+.body{width:192px;height:175px;border-radius:48% 48% 8% 8%;margin-top:-4px;background:linear-gradient(90deg,#d5c8b5,#fff9ed 22%,#f8f0e3 78%,#c5b7a3);position:relative;clip-path:polygon(19% 0,36% 0,50% 12%,64% 0,81% 0,100% 27%,87% 42%,80% 100%,20% 100%,13% 42%,0 27%)}
+.body:after{content:"";position:absolute;left:50%;top:12%;height:100%;width:2px;background:#cbbca8;opacity:.5}
+.body:before{content:"";position:absolute;top:0;left:26%;height:70%;width:20%;border-radius:0 0 50% 50%;background:#b7a895;opacity:.18}
+.profile-art .person{transform:translateY(24px) scale(1.08)}
+.profile-art .head{background:var(--skin)}.profile-art .hair{background:var(--hair)}
+.profile-art .neck{background:var(--skin)}
+.profile-art .body{background:linear-gradient(90deg,#cfc0ac,#fffaf0 20%,#f5eee2 80%,#b5a58e)}
+.profile-art .body:after{background:#c6b8a5}
+.profile-art .body:before{background:#b4a38e}
+.profile-art .decor{position:absolute;top:18px;left:18px;font-size:24px;opacity:.7}
+.photo-caption{position:absolute;inset:auto 0 0;padding:68px 20px 20px;color:#fff;background:linear-gradient(transparent,#281a17e8 30%)}
+.name{font-size:31px;font-weight:bold;letter-spacing:-.5px}.tag{color:#ffd7b5;font:600 13px Arial,sans-serif;margin-top:3px}.desc{font:14px/1.5 Arial,sans-serif;margin-top:10px}.insight{font:italic 12px/1.5 Arial,sans-serif;color:#f5ddcb;margin-top:10px}
+.stamp{position:absolute;top:26px;left:18px;border:4px solid #bdf2c5;color:#bdf2c5;border-radius:8px;padding:7px 10px;font:800 20px Arial,sans-serif;transform:rotate(-12deg);opacity:0;pointer-events:none}
+.note{text-align:center;font:12px/1.5 Arial,sans-serif;color:var(--muted);margin:11px 0 12px}
+.controls{display:flex;justify-content:center;align-items:center;gap:12px}.controls button{min-width:210px}
+.hidden{display:none!important}
+.ending .sun{font-size:108px}.ending h2{font-size:31px}.ending .lastline{font-size:19px;font-weight:bold;margin-top:20px}
+footer{text-align:center;font:11px Arial,sans-serif;color:#a18a7b;padding:0 15px 17px}
+@media(max-height:740px){.stage{height:410px;min-height:350px}.head{transform:scale(.9)}.profile-art .person{transform:translateY(28px) scale(.93)}.body{height:150px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div><h1>Zie je het licht? <span style="color:var(--rose)">♥</span></h1><div class="subtitle">Een kleine zoektocht naar de liefde</div></div><div class="counter">♥ <span id="progress">0/6</span></div></header>
+<main>
+<section id="intro" class="panel intro">
+<div class="sun">💌</div>
+<h2>Op zoek naar de perfecte man?</h2>
+<p>Knap, grappig, slim, attent, romantisch… en liefst zonder vervelende kantjes?</p>
+<p>Misschien ontdek je onderweg dat liefde zich niet altijd aan je lijstje houdt.</p>
+<button class="primary" id="start">Laat me verrassen →</button>
+</section>
+<section id="game" class="hidden">
+<div class="game-head"><span id="counter">Kandidaat 1 van 6</span><span>Veeg naar rechts →</span></div>
+<div class="stage"><article id="card" class="card" aria-label="Veeg naar rechts om verder te gaan">
+<div id="art" class="art profile-art"><div class="sunshine"></div><div class="decor" id="decor">✦</div><div class="person"><div class="head"><div class="hair"></div><div class="ear left"></div><div class="ear right"></div><div class="eyes"><i></i><i></i></div><div class="nose"></div><div class="smile"></div></div><div class="neck"></div><div class="body"></div></div></div>
+<div class="stamp" id="stamp">GEEF 'M EEN KANS ♥</div>
+<div class="photo-caption"><div class="name" id="name">Milan, 31</div><div class="tag" id="tag">De avonturier</div><div class="desc" id="desc"></div><div class="insight" id="insight"></div></div>
+</article></div>
+<div class="note">Geen kruisje. Geen afwijzing. Alleen een kans.</div>
+<div class="controls"><button id="swipe">♥ &nbsp; Geef hem een kans</button></div>
+<div class="note">Je kunt de kaart ook met je vinger of muis naar rechts vegen.</div>
+</section>
+<section id="ending" class="panel ending hidden">
+<div class="sun">🦙</div><div class="small" style="letter-spacing:2px;text-transform:uppercase">De onverwachte kandidaat</div>
+<h2>En toen zag je het licht.</h2>
+<p>Je hoeft je standaarden niet op te geven. Misschien mag je alleen wat meer ruimte laten voor iemand die je verrast, je laat lachen en je goed laat voelen.</p>
+<div class="lastline">Liefde heeft geen perfect profiel. ♥</div>
+<p><i>En soms komt het inzicht op vier poten, met een singlet aan.</i></p>
+<button class="primary" id="restart">Opnieuw beginnen ↻</button>
+</section>
+</main>
+<footer>Een liefdevolle spiegel · Een klein beetje humor · Alle kandidaten zijn fictief</footer>
+</div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);
+const people=[
+{name:'Milan',age:31,tag:'De avonturier',desc:'Spontaan, sportief en altijd te vinden voor een onverwachte uitstap.',insight:'Misschien begint iets moois met gewoon meegaan.',hair:'#39271f',skin:'#d9a47f',bg:'linear-gradient(150deg,#b9a28a,#e8c7a5)',decor:'☀'},
+{name:'Thomas',age:34,tag:'De zachte grappenmaker',desc:'Een warme glimlach, droge humor en een talent om je dag beter te maken.',insight:'Misschien is samen lachen belangrijker dan alle vinkjes zetten.',hair:'#70442b',skin:'#e0b08b',bg:'linear-gradient(150deg,#b18a70,#ead3bd)',decor:'✦'},
+{name:'Julien',age:29,tag:'De dromer',desc:'Creatief, nieuwsgierig en iemand die graag écht naar je luistert.',insight:'Misschien zit aantrekkingskracht ook in hoe je je bij iemand voelt.',hair:'#4b3026',skin:'#d6a07d',bg:'linear-gradient(150deg,#9caa9c,#e7d1b8)',decor:'❋'},
+{name:'Simon',age:36,tag:'De betrouwbare charmeur',desc:'Rustig, attent en geïnteresseerd in wie je écht bent.',insight:'Je hoeft niet perfect te zijn om graag gezien te worden. Jij ook niet.',hair:'#392b25',skin:'#c98c68',bg:'linear-gradient(150deg,#8a9b83,#e1c6a8)',decor:'🌿'},
+{name:'Luca',age:32,tag:'De levensgenieter',desc:'Een open blik, een beetje eigenwijs en altijd ruimte voor plezier.',insight:'Misschien mag liefde ook gewoon licht en onverwacht zijn.',hair:'#9a6840',skin:'#e2b18a',bg:'linear-gradient(150deg,#d9a878,#f3d5a7)',decor:'☀'},
+{name:'Lama',age:28,tag:'De onverwachte wijze',desc:'Geen standaard kandidaat. Wel een verrassend goed inzicht in de liefde.',insight:'Wie weet zie je de liefde pas als je je checklist even loslaat.',hair:'#b27a43',skin:'#e2b58f',bg:'linear-gradient(150deg,#dfb18a,#f8e4c7)',decor:'♥'}
+];
+let index=0,busy=false,drag=false,startX=0,startY=0,dx=0,dy=0;
+function screen(id){['intro','game','ending'].forEach(x=>$(x).classList.toggle('hidden',x!==id))}
+function render(){
+const p=people[index];$('progress').textContent=index+'/6';$('counter').textContent='Kandidaat '+(index+1)+' van 6';
+$('name').textContent=p.name+', '+p.age;$('tag').textContent=p.tag;$('desc').textContent=p.desc;$('insight').textContent=p.insight;
+$('art').style.background=p.bg;$('art').style.setProperty('--hair',p.hair);$('art').style.setProperty('--skin',p.skin);$('decor').textContent=p.decor;
+$('stamp').style.opacity=0;$('card').style.opacity=1;$('card').style.transition='none';$('card').style.transform='translate(0,0) rotate(0deg)';
+}
+function next(){
+if(busy)return;busy=true;const c=$('card');c.style.transition='transform .48s cubic-bezier(.25,.7,.3,1),opacity .48s';c.style.transform='translate(125%,-5%) rotate(23deg)';c.style.opacity='.25';
+setTimeout(()=>{index++;busy=false;if(index>=people.length){$('progress').textContent='6/6';screen('ending')}else render()},460)
+}
+$('start').addEventListener('click',()=>{index=0;screen('game');render()});
+$('swipe').addEventListener('click',next);
+$('restart').addEventListener('click',()=>{index=0;screen('intro');render()});
+const card=$('card');
+card.addEventListener('pointerdown',e=>{if(busy)return;drag=true;startX=e.clientX;startY=e.clientY;dx=dy=0;card.setPointerCapture(e.pointerId);card.style.transition='none';card.style.cursor='grabbing'});
+card.addEventListener('pointermove',e=>{if(!drag)return;dx=e.clientX-startX;dy=e.clientY-startY;if(Math.abs(dx)>Math.abs(dy)*.75){card.style.transform=`translate(${dx}px,${dy*.32}px) rotate(${dx*.065}deg)`;$('stamp').style.opacity=Math.max(0,Math.min(1,(dx-20)/65))}});
+function release(){if(!drag)return;drag=false;card.style.cursor='grab';if(dx>85){next()}else{card.style.transition='transform .24s ease';card.style.transform='translate(0,0) rotate(0deg)';$('stamp').style.opacity=0}}
+card.addEventListener('pointerup',release);card.addEventListener('pointercancel',release);
+})();
+</script>
+</body>
+</html>
